@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% block heading %}Geo Plotting{% endblock %}
+
+{% block head %}
+   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+   <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+   <script type="text/javascript">
+     var mymapsApiKey = 'AIzaSyDeUbThFc5v9C6sqwVRLk4y5mtl1LOxs5I';
+     google.charts.load('current', {packages: ['geochart'], mapsApiKey: mymapsApiKey});
+   </script>
+   <script type="text/javascript" src="static/data/geo_data.json"></script>
+   <style>
+      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+      body {
+         background-image: url('https://img.freepik.com/premium-photo/3d-abstract-background-geometrical-illustration-design_851755-2899.jpg');
+         background-size: cover;
+         background-position: center;
+         background-attachment: fixed;
+         color: #ffcc00; /* Bright yellow for general text */
+         font-family: 'Poppins', Arial, sans-serif;
+      }
+      h1, h2, h3 {
+         color: #1722f1; /* Bright blue for headings */
+         font-weight: bold;
+      }
+
+      /* "Choose a category" Container */
+      .category-container {
+         background-color: #e6ccff; /* Light purple */
+         padding: 10px;
+         border-radius: 10px;
+         display: inline-block;
+         margin-bottom: 10px;
+      }
+
+      label {
+         color: #4b0082 !important; /* Dark purple */
+         font-size: 20px;
+         font-family: 'Poppins', Arial, sans-serif;
+         font-weight: 600;
+         letter-spacing: 1px;
+      }
+
+      /* Travel, Art, Music, Food, Education Buttons */
+      .category-button {
+         background-color: #20b2aa; /* Teal */
+         color: white;
+         padding: 10px 15px;
+         border: none;
+         cursor: pointer;
+         border-radius: 8px;
+         font-size: 18px;
+         font-family: 'Poppins', Arial, sans-serif;
+         font-weight: bold;
+         margin: 5px;
+         transition: background-color 0.3s;
+      }
+
+      .category-button:hover {
+         background-color: #1a8c8a; /* Darker teal */
+      }
+
+      select, button {
+         background-color: #e3f425;
+         color: black;
+         padding: 8px;
+         border: none;
+         cursor: pointer;
+         border-radius: 5px;
+         font-family: 'Poppins', Arial, sans-serif;
+         font-size: 16px;
+      }
+      select:focus, button:hover {
+         background-color: #ffaa00;
+      }
+   </style>
+{% endblock %}
+
+{% block script %}
+<script language="JavaScript">
+function graph(cat) {
+  console.log(cat);
+   // Define the chart to be drawn.
+    var data = google.visualization.arrayToDataTable(geoData[cat]);
+  
+   // Set chart options
+   var options = {
+      showTip: true,
+      displayMode: 'markers',
+      backgroundColor: '#0d0d0d',
+      datalessRegionColor: '#A9A9A9',
+      defaultColor: '#9999ff',
+      magnifyingGlass: {enable: false, zoomFactor: 5.0},
+      markerOpacity: 0.5,
+      legend: {textStyle: {color: 'blue', fontSize: 16}}
+   };       
+
+   // Instantiate and draw the chart.
+   var chart = new google.visualization.GeoChart(document.getElementById('container'));
+   chart.draw(data, options);
+}
+google.charts.setOnLoadCallback(function() {graph('art')});
+</script>
+{% endblock %}

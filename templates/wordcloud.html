@@ -1,0 +1,172 @@
+
+{% extends "base.html" %}
+{% block heading %}
+    <span style="color: white;">Word Cloud</span>
+{% endblock %}
+
+{% block head %}
+<script src="https://cdn.rawgit.com/jasondavies/d3-cloud/f00a5113/build/d3.layout.cloud.js"></script>
+<style>
+    body {
+        background: url('https://img.freepik.com/premium-photo/glowing-spheres-glassmorphism-dark-background_562847-1260.jpg') no-repeat center center fixed;
+        background-size: cover;
+    }
+
+    /* Styling for buttons */
+    .category-container {
+        text-align: center;
+        margin: 20px auto;
+    }
+
+    .category-button {
+        background-color: #FFC0CB; /* Baby Pink */
+        color: black;
+        padding: 12px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        margin: 5px;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+        transition: 0.3s ease;
+    }
+
+    .category-button:hover {
+        background-color: #ff9eb5; /* Slightly darker pink */
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <!-- Category Selection Buttons -->
+    <div class="category-container">
+        <button class="category-button">Choose a Category</button>
+        <button class="category-button" onclick="graph('art')">Art</button>
+        <button class="category-button" onclick="graph('music')">Music</button>
+        <button class="category-button" onclick="graph('travel')">Travel</button>
+        <button class="category-button" onclick="graph('education')">Education</button>
+        <button class="category-button" onclick="graph('food')">Food</button>
+    </div>
+{% endblock %}
+
+{% block script %}
+<script>
+	var data;
+
+	// Size and margin
+	var basewidth = $('.graph').width();
+	var baseheight = $(window).height() * 75 / 100;
+	var margin = {
+		top: 20,
+		right: 30,
+		bottom: 30,
+		left: 30
+	},
+	width = basewidth - margin.left - margin.right,
+	height = baseheight - margin.top - margin.bottom;
+
+	// Main canvas
+	var svg = d3.select('.graph')
+	    .append('svg')
+	    .attr('width', width + margin.left + margin.right)
+	    .attr('height', height + margin.top + margin.bottom);
+
+	var canvas = svg.append("g")
+	    .attr("class", "points")
+	    .attr("transform", "translate(" + margin.left + "," + margin.top + ")")	
+	    .append("g")
+	    .attr("transform", "translate("+width/2+","+height/2+")");
+
+	var fill = d3.scaleOrdinal(d3.schemeCategory10);
+	var sizeValue = function(d) { return d.amt; }, 
+		sizeScale = d3.scaleLinear().range([12,100]), 
+		sizeMap = function(d) { return sizeScale(sizeValue(d)); };
+
+	canvas.append("text")
+		.attr("class", "label label-text")
+		.attr("x", width/2)
+		.attr("y", height/2 + margin.bottom -10 )
+		.style("text-anchor", "end");
+
+	canvas.append("text")
+		.attr("class", "label label-info")
+		.attr("x", -width/2)
+		.attr("y", height/2 + margin.bottom -20 )
+		.style("text-anchor", "start")
+		.text("Number: (mouse over a word to view)");
+
+	// Draw the word cloud
+	function draw(words) {
+		var cloud = canvas.selectAll(".words")
+				.data(words);
+
+		// Entering words
+		cloud.enter()
+			.append("text")
+			.on("mouseenter", updatedata)
+			.on("mouseleave", removedata)
+			.attr("class", "words")
+			.style("fill", function(d, i) { return fill(i); }) // Keeps words colored
+			.attr("text-anchor", "middle")
+			.style('font-size', "1px")
+			.text(function(d) { return d.text; })
+			.transition()
+			.duration(600)
+			.style("font-size", function(d) { return d.size + "px"; })
+			.attr("transform", function(d) {
+				return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+			})
+			.style("fill-opacity", 1);
+
+		// Entering and existing words
+		cloud
+			.text(function(d) { return d.text; })
+			.style('font-size', "1px")
+			.transition()
+			.duration(600)
+			.style("font-size", function(d) { return d.size + "px"; })
+			.attr("transform", function(d) {
+				return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+			})
+			.style("fill-opacity", 1);
+
+		// Exiting words
+		cloud.exit()
+			.transition()
+			.duration(200)
+			.style('fill-opacity', 1e-6)
+			.style('font-size', "1px")
+			.remove();
+	}	
+
+	// Function to load a different word cloud based on category selection
+	var graph = function(user) {
+		d3.json('/get/word_freq', function(data) {
+			data = data[user];
+			sizeScale.domain([d3.min(data, sizeValue), d3.max(data, sizeValue)]);
+			canvas.select(".label-text").text("~ @" + user);
+			d3.layout.cloud().size([width, height])
+				.words(data)
+				.text(function(d) { return d.word; })
+				.padding(5)
+				.rotate(function() { return 0; })
+				.font("Roboto")
+				.fontSize(sizeMap)
+				.on("end", draw)
+				.start();
+		});
+	}
+	graph("art"); // Default category on page load
+
+	var updatedata = function(d) {
+		d3.select('.label-info')
+		.text('Number: '+d['amt'].toString());
+	}
+
+	var removedata = function(d) {
+		d3.select('.label-info')
+		.text('Number: (mouse over a point to view)');
+	}
+</script>
+{% endblock %}

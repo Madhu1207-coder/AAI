@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Popular Category - Pie Chart</title>
+
+    <!-- Google Charts -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-image: url('https://png.pngtree.com/thumb_back/fh260/background/20231005/pngtree-d-rendering-of-a-product-display-stage-with-red-and-white-image_13543115.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start; /* Align content at the top */
+            color: white;
+            position: relative;
+        }
+
+        .header {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        h2 {
+            color: rgb(38, 199, 239);
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background-color: #f5a623; /* Mustard color */
+            color: rgb(18, 6, 6);
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            background-color: #d48c1e;
+        }
+
+        .chart-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 350px; /* Adjust to fit inside the round shape */
+            height: 350px;
+            border-radius: 50%;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #chart_div {
+            width: 100%;
+            height: 100%;
+        }
+
+        .home-btn {
+            background-color: #ff4081; /* Pink */
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        .home-btn:hover {
+            background-color: #d93670;
+        }
+    </style>
+</head>
+<body>
+
+    <button class="home-btn" onclick="goHome()">🏠 Home</button>
+
+    <div class="header">
+        <h2><strong>Choose a Category:</strong></h2>
+        <div class="buttons">
+            <button class="btn" onclick="drawChart('event_number');">Number of Events</button>
+            <button class="btn" onclick="drawChart('interested_count');">Interested Count</button>
+            <button class="btn" onclick="drawChart('average');">Average Count</button>
+            <button class="btn" onclick="drawChart('attending_count');">Attending Count</button>
+            <button class="btn" onclick="drawChart('noreply_count');">No Reply Count</button>
+        </div>
+    </div>
+
+    <div class="chart-container">
+        <div id="chart_div"></div>
+    </div>
+
+    <script>
+        google.charts.load("current", {packages:["corechart"]});
+        google.charts.setOnLoadCallback(function() { drawChart('interested_count'); });
+
+        var eventData = {
+            "event_number": {
+                "food": 2000, "art": 1500, "travel": 355, "education": 231, "music": 2166
+            },
+            "interested_count": {
+                "food": 2001686, "art": 1488531, "travel": 355444, "education": 231897, "music": 2166801
+            },
+            "average": {
+                "food": 1401, "art": 1376, "travel": 1518, "education": 1811, "music": 1395
+            },
+            "attending_count": {
+                "food": 309746, "art": 370795, "travel": 53456, "education": 45314, "music": 604307
+            },
+            "noreply_count": {
+                "food": 310405, "art": 385915, "travel": 103668, "education": 51958, "music": 746477
+            }
+        };
+
+        function drawChart(category) {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Event');
+            data.addColumn('number', 'Count');
+
+            var categories = Object.keys(eventData[category]);
+            categories.forEach(function(key) {
+                data.addRow([key, eventData[category][key]]);
+            });
+
+            var options = {
+                title: category.replace(/_/g, ' ').toUpperCase(),
+                is3D: true,
+                backgroundColor: 'transparent',
+                slices: {
+                    0: { color: '#ff4081' }, /* Pink */
+                    1: { color: '#f5a623' }, /* Mustard */
+                    2: { color: '#7ed321' }, /* Pistachio Green */
+                    3: { color: '#bd10e0' }, /* Light Purple */
+                    4: { color: '#4a90e2' }  /* Sky Blue */
+                },
+                legend: { 
+                    position: 'bottom', 
+                    textStyle: { color: 'black', fontSize: 14 }
+                },
+                tooltip: { textStyle: { color: 'black' } },
+                titleTextStyle: { color: 'black' },
+                pieSliceTextStyle: { color: 'black' },
+                chartArea: {
+                    left: 10, top: 10, width: "90%", height: "90%"
+                }
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+        }
+
+        function goHome() {
+            window.location.href = "C:\\Users\\boopa\\OneDrive\\Attachments\\Documents\\fbevent-prediction-master\\templates\\home.html";
+        }
+    </script>
+
+</body>
+</html>

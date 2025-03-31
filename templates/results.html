@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block heading %}Predicted Result{% endblock %}
+
+
+{% block content %}
+<div style="margin: 20px">
+<center>
+	<h4>The predicted value of Interested Count is <strong> {{ prediction }} </strong> </h4>
+	<h4>The true value of Interested Count is <strong> {{ truth }} </strong> </h4>
+	<a href="/event">
+		<button type="button" class="btn btn-success">Prediction</button></a>
+</center>
+</div>
+{% endblock %}

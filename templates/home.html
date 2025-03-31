@@ -1,0 +1,166 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGJRAkycuHAHRg32mUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Roboto:wght@300;400;700&display=swap');
+
+        body {
+            background-image: url('https://t3.ftcdn.net/jpg/08/54/44/12/360_F_854441291_aYMBVu9HDRX3pkLrrZEMNXtaxLO79d6W.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: flex-start;
+            text-align: left;
+            font-family: 'Poppins', sans-serif;
+            padding: 50px;
+        }
+
+        .content {
+            max-width: 700px;
+            text-align: left;
+            margin-left: 0;
+        }
+
+        .container-box {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 255, 255, 0.4);
+            margin-bottom: 20px;
+        }
+
+        .btn-group-custom {
+            display: flex;
+            justify-content: flex-start;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .btn-custom {
+            background: rgb(251, 248, 251);
+            color: black;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+
+        .analysis-box {
+            background: rgb(91, 192, 220);
+            padding: 15px;
+            border-radius: 10px;
+            transition: background 0.3s;
+        }
+
+        .fa-chart-line { color: #ff5733; }
+        .fa-github { color: #6e5494; }
+        .fa-database { color: #ffcc00; }
+        .fa-calendar-alt { color: #00ccff; }
+        .fa-plane { color: #009933; }
+        .fa-utensils { color: #ff6600; }
+        .fa-music { color: #cc0099; }
+        .fa-paint-brush { color: #0066cc; }
+        .fa-book { color: #ff3366; }
+        .fa-chart-pie { color: #9933ff; }
+        .fa-map { color: #ff6600; }
+        .fa-star { color: #ffcc00; }
+        .fa-cloud { color: #0099cc; }
+        .fa-robot { color: #00ff99; }
+        .fa-chart-bar { color: #ff3300; }
+
+        .fa-solid {
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .fa-solid:hover {
+            transform: scale(1.3);
+            color: #ff4d4d;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container content">
+        <div class="container-box">
+            <h1 class="text-line"><i class="fa-solid fa-chart-line"></i> Facebook Event Prediction</h1>
+            <h2 class="text-line">Made by 
+                <a href="https://github.com/Madhu1207-coder" style="color: #00e6e6;">
+                    <i class="fa-brands fa-github"></i> Madhumitha B
+                </a>
+            </h2>
+        </div>
+
+        <div class="container-box">
+            <p class="text-line"><i class="fa-solid fa-database"></i> Analysis of 5 categories of Facebook Events.</p>
+            <p class="text-line"><i class="fa-solid fa-calendar-alt"></i> Number of Events Collected:</p>
+            <ul class="event-list">
+                <li class="text-line"><i class="fa-solid fa-plane"></i> Travel - 204</li>
+                <li class="text-line"><i class="fa-solid fa-utensils"></i> Food - 221</li>
+                <li class="text-line"><i class="fa-solid fa-music"></i> Music - 222</li>
+                <li class="text-line"><i class="fa-solid fa-paint-brush"></i> Art - 225</li>
+                <li class="text-line"><i class="fa-solid fa-book"></i> Education - 171</li>
+            </ul>
+        </div>
+
+        <div class="container-box">
+            <p class="text-line"><i class="fa-solid fa-chart-pie"></i> Links to analysis graphs:</p>    
+            <div class="btn-group-custom">
+                <div class="analysis-box" onmouseover="hoverEffect(this)" onmouseout="resetEffect(this)">
+                    <a href="/geoplot">
+                        <button type="button" class="btn btn-custom">
+                            <i class="fa-solid fa-map"></i> Geo Plotting
+                        </button>
+                    </a>
+                </div>
+                <div class="analysis-box" onmouseover="hoverEffect(this)" onmouseout="resetEffect(this)">
+                    <a href="/popcat">
+                        <button type="button" class="btn btn-custom">
+                            <i class="fa-solid fa-star"></i> Popular Category
+                        </button>
+                    </a>
+                </div>
+                <div class="analysis-box" onmouseover="hoverEffect(this)" onmouseout="resetEffect(this)">
+                    <a href="/wordcloud">
+                        <button type="button" class="btn btn-custom">
+                            <i class="fa-solid fa-cloud"></i> Word Cloud
+                        </button>
+                    </a>
+                </div>
+            </div>
+            <br><br>
+            <div>
+                <p class="text-line"><i class="fa-solid fa-robot"></i> Machine Learning Model</p>
+                <div class="analysis-box" onmouseover="hoverEffect(this)" onmouseout="resetEffect(this)">
+                    <a href="/event">
+                        <button type="button" class="btn btn-custom">
+                            <i class="fa-solid fa-chart-bar"></i> Prediction
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function hoverEffect(element) {
+            element.style.background = 'linear-gradient(to right, pink, purple)';
+            element.style.color = 'white';
+        }
+
+        function resetEffect(element) {
+            element.style.background = 'white';
+            element.style.color = 'black';
+        }
+    </script>
+</body>
+</html>
