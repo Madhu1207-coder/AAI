@@ -144,9 +144,6 @@ This project is licensed under the [MIT License](./LICENSE).
 
 ---
 
-> Made with ❤️ by **Madhumitha B** & 
+> Made with ❤️ by **Madhumitha B**  
 ```
 
----
-
-Would you like this converted into a `.md` file to add directly to your GitHub repository?
