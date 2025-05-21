@@ -7,13 +7,17 @@
   <img src="https://img.shields.io/github/license/Madhu1207-coder/AAI?style=for-the-badge" />
 </p>
 
----
+<p align="center">
+  <img src="https://wp.klientboost.com/wp-content/uploads/2021/09/facebook_hub_featured_animation.gif" width="600" alt="Cybersecurity GIF"/>
+</p>
+
+
 
 ## 🚀 Overview
 
 This project focuses on predicting the **popularity of Facebook events** using machine learning techniques. The model analyzes key event attributes to determine their likelihood of success, helping event organizers anticipate interest and plan effectively.
 
----
+
 
 ## 🌟 Key Features
 
