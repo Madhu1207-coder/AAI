@@ -148,4 +148,8 @@ This project is licensed under the [MIT License](./LICENSE).
 
 ---
 
-> Made with ❤️ by **Madhumitha B**  
+> Made with ❤️ by **Madhumitha B**
+
+<p align="center">
+  <img src="https://mir-s3-cdn-cf.behance.net/project_modules/fs/15895598779823.5ee3cd3210c15.gif" width="220"/>
+</p>
